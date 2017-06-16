@@ -337,7 +337,7 @@ def describe(df, bins=10, check_correlation=True, correlation_overrides=None, po
     return {'table': table_stats, 'variables': variable_stats.T, 'freq': {k: df[k].value_counts() for k in df.columns}}
 
 
-def to_html(sample, stats_object, desc_dict={}):
+def to_html(sample, stats_object, desc_dict={},data_set_desc=''):
     """Generate a HTML report from summary statistics and a given sample.
 
     Parameters
@@ -345,6 +345,7 @@ def to_html(sample, stats_object, desc_dict={}):
     sample: DataFrame containing the sample you want to print
     stats_object: Dictionary containing summary statistics. Should be generated with an appropriate describe() function
     desc_dict: Dictionary containing variable descriptions
+    data_set_desc: Key descriptive information about the dataset
 
     Returns
     -------
@@ -492,7 +493,6 @@ def to_html(sample, stats_object, desc_dict={}):
 
     # Overview
     formatted_values = {k: fmt(v, k) for k, v in six.iteritems(stats_object['table'])}
-
     row_classes={}
     for col in six.viewkeys(stats_object['table']) & six.viewkeys(row_formatters):
         row_classes[col] = row_formatters[col](stats_object['table'][col])
@@ -503,7 +503,7 @@ def to_html(sample, stats_object, desc_dict={}):
     for msg in messages:
         messages_html += templates.message_row.format(message=msg)
 
-    overview_html = templates.template('overview').render(values=formatted_values, row_classes = row_classes, messages=messages_html)
+    overview_html = templates.template('overview').render(values=formatted_values, row_classes = row_classes, messages=messages_html, data_set_desc=data_set_desc)
 
     # Sample
 

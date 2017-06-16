@@ -10,14 +10,14 @@ class ProfileReport(object):
     html = ''
     file = None
 
-    def __init__(self, df, desc_dict={}, **kwargs):
+    def __init__(self, df, desc_dict={},data_set_desc='', **kwargs):
 
         sample = kwargs.get('sample', df.head())
 
         description_set = describe(df, **kwargs)
 
         self.html = to_html(sample,
-                            description_set, desc_dict)
+                            description_set, desc_dict,data_set_desc)
 
         self.description_set = description_set
 
