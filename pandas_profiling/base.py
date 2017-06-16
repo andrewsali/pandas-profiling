@@ -337,13 +337,14 @@ def describe(df, bins=10, check_correlation=True, correlation_overrides=None, po
     return {'table': table_stats, 'variables': variable_stats.T, 'freq': {k: df[k].value_counts() for k in df.columns}}
 
 
-def to_html(sample, stats_object):
+def to_html(sample, stats_object, desc_dict = {}):
     """Generate a HTML report from summary statistics and a given sample.
 
     Parameters
     ----------
     sample: DataFrame containing the sample you want to print
     stats_object: Dictionary containing summary statistics. Should be generated with an appropriate describe() function
+    desc_dict: Dictionary containing variable descriptions
 
     Returns
     -------
@@ -445,8 +446,13 @@ def to_html(sample, stats_object):
     messages = []
 
     for idx, row in stats_object['variables'].iterrows():
+        var_desc = ""
 
-        formatted_values = {'varname': idx, 'varid': hash(idx)}
+        if idx in desc_dict:
+            var_desc = desc_dict[idx]
+
+        formatted_values = {'varname': idx, 'varid': hash(idx), 'vardesc':var_desc}
+
         row_classes = {}
 
         for col, value in six.iteritems(row):
