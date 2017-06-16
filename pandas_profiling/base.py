@@ -337,7 +337,7 @@ def describe(df, bins=10, check_correlation=True, correlation_overrides=None, po
     return {'table': table_stats, 'variables': variable_stats.T, 'freq': {k: df[k].value_counts() for k in df.columns}}
 
 
-def to_html(sample, stats_object, desc_dict = {}):
+def to_html(sample, stats_object, desc_dict={}):
     """Generate a HTML report from summary statistics and a given sample.
 
     Parameters
